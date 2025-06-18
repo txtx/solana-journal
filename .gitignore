@@ -1,4 +1,6 @@
-
+anchor/target/*
+.nx/cache
+web/.next
 # javascript dependencies
 node_modules
 
