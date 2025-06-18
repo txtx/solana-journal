@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { Keypair, PublicKey } from '@solana/web3.js';
+import { Keypair, PublicKey } from "@solana/web3.js";
 // import { useMemo } from 'react';
-import { ellipsify } from '../ui/ui-layout';
-import { ExplorerLink } from '../cluster/cluster-ui';
+import { ellipsify } from "../ui/ui-layout";
+import { ExplorerLink } from "../cluster/cluster-ui";
 import {
   useJournalProgram,
   useJournalProgramAccount,
-} from './journal-data-access';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useState } from 'react';
+} from "./journal-data-access";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useState } from "react";
 
 export function JournalCreate() {
   const { createEntry } = useJournalProgram();
   const { publicKey } = useWallet();
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
 
-  const isFormValid = title.trim() !== '' && message.trim() !== '';
+  const isFormValid = title.trim() !== "" && message.trim() !== "";
 
   const handleSubmit = () => {
     if (publicKey && isFormValid) {
@@ -25,8 +25,8 @@ export function JournalCreate() {
     }
   };
 
-  if (!publicKey){
-    return <p>Connect your wallet</p>
+  if (!publicKey) {
+    return <p>Connect your wallet</p>;
   }
 
   return (
@@ -50,16 +50,17 @@ export function JournalCreate() {
         onClick={handleSubmit}
         disabled={createEntry.isPending || !isFormValid}
       >
-        Create Journal Entry {createEntry.isPending && '...'}
+        Create Journal Entry {createEntry.isPending && "..."}
       </button>
     </div>
   );
 }
 
-
 export function JournalList() {
   const { accounts, getProgramAccount } = useJournalProgram();
 
+  console.log("JournalList accounts:", accounts.data);
+  console.log("JournalList getProgramAccount:", getProgramAccount.data);
   if (getProgramAccount.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>;
   }
@@ -74,7 +75,7 @@ export function JournalList() {
     );
   }
   return (
-    <div className={'space-y-6'}>
+    <div className={"space-y-6"}>
       {accounts.isLoading ? (
         <span className="loading loading-spinner loading-lg"></span>
       ) : accounts.data?.length ? (
@@ -88,7 +89,7 @@ export function JournalList() {
         </div>
       ) : (
         <div className="text-center">
-          <h2 className={'text-2xl'}>No accounts</h2>
+          <h2 className={"text-2xl"}>No accounts</h2>
           No accounts found. Create one above to get started.
         </div>
       )}
@@ -97,16 +98,14 @@ export function JournalList() {
 }
 
 function JournalCard({ account }: { account: PublicKey }) {
-  const {
-    accountQuery,
-    updateEntry, 
-    deleteEntry
-  } = useJournalProgramAccount({ account });
+  const { accountQuery, updateEntry, deleteEntry } = useJournalProgramAccount({
+    account,
+  });
   const { publicKey } = useWallet();
-  const [message, setMessage] = useState('');
-  const title = accountQuery.data?.title; 
+  const [message, setMessage] = useState("");
+  const title = accountQuery.data?.title;
 
-  const isFormValid = message.trim() !== '';
+  const isFormValid = message.trim() !== "";
 
   const handleSubmit = () => {
     if (publicKey && isFormValid && title) {
@@ -114,8 +113,8 @@ function JournalCard({ account }: { account: PublicKey }) {
     }
   };
 
-  if (!publicKey){
-    return <p>Connect your wallet</p>
+  if (!publicKey) {
+    return <p>Connect your wallet</p>;
   }
 
   return accountQuery.isLoading ? (
@@ -130,9 +129,7 @@ function JournalCard({ account }: { account: PublicKey }) {
           >
             {accountQuery.data?.title}
           </h2>
-          <p> 
-          {accountQuery.data?.message}
-          </p>
+          <p>{accountQuery.data?.message}</p>
           <div className="card-actions justify-around">
             <textarea
               placeholder="Update message here"
@@ -145,7 +142,7 @@ function JournalCard({ account }: { account: PublicKey }) {
               onClick={handleSubmit}
               disabled={updateEntry.isPending || !isFormValid}
             >
-              Update Journal Entry {updateEntry.isPending && '...'}
+              Update Journal Entry {updateEntry.isPending && "..."}
             </button>
           </div>
           <div className="text-center space-y-4">
@@ -160,7 +157,7 @@ function JournalCard({ account }: { account: PublicKey }) {
               onClick={() => {
                 if (
                   !window.confirm(
-                    'Are you sure you want to close this account?'
+                    "Are you sure you want to close this account?"
                   )
                 ) {
                   return;
