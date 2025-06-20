@@ -1,4 +1,5 @@
 anchor/target/*
+anchor/.anchor
 .nx/cache
 web/.next
 # javascript dependencies
