@@ -1,0 +1,427 @@
+{
+  "address": "EZB64BQPMPzGNEV6XvrxTSPcQHCXaRF7aXMgunxQ6LNh",
+  "metadata": {
+    "name": "journal",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "create_journal_entry",
+      "discriminator": [
+        48,
+        65,
+        201,
+        186,
+        25,
+        41,
+        127,
+        0
+      ],
+      "accounts": [
+        {
+          "name": "journal_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "delete_journal_entry",
+      "discriminator": [
+        156,
+        50,
+        93,
+        5,
+        157,
+        97,
+        188,
+        114
+      ],
+      "accounts": [
+        {
+          "name": "journal_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "update_journal_entry",
+      "discriminator": [
+        113,
+        164,
+        49,
+        62,
+        43,
+        83,
+        194,
+        172
+      ],
+      "accounts": [
+        {
+          "name": "journal_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "JournalEntryState",
+      "discriminator": [
+        113,
+        86,
+        110,
+        124,
+        140,
+        14,
+        58,
+        66
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "JournalEntryCreated",
+      "discriminator": [
+        126,
+        173,
+        152,
+        196,
+        221,
+        250,
+        113,
+        175
+      ]
+    },
+    {
+      "name": "JournalEntryDeleted",
+      "discriminator": [
+        168,
+        226,
+        83,
+        105,
+        167,
+        47,
+        228,
+        13
+      ]
+    },
+    {
+      "name": "JournalEntryUpdated",
+      "discriminator": [
+        36,
+        218,
+        186,
+        216,
+        237,
+        105,
+        107,
+        243
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "JournalEntryCreated",
+      "docs": [
+        "Represents a journal entry creation event."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "The public key of the owner of the journal entry."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "docs": [
+              "The title of the journal entry."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "docs": [
+              "The content of the journal entry."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "entry_id",
+            "docs": [
+              "The unique identifier for the journal entry."
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "JournalEntryDeleted",
+      "docs": [
+        "Represents a journal entry deletion event."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "The public key of the owner of the journal entry."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "entry_id",
+            "docs": [
+              "The unique identifier for the journal entry."
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "JournalEntryState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "JournalEntryUpdated",
+      "docs": [
+        "Represents a journal entry update event."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "The public key of the owner of the journal entry."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "message",
+            "docs": [
+              "The updated message of the journal entry."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "entry_id",
+            "docs": [
+              "The unique identifier for the journal entry."
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    }
+  ]
+}

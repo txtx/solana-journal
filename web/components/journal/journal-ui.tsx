@@ -58,9 +58,9 @@ export function JournalCreate() {
 
 export function JournalList() {
   const { accounts, getProgramAccount } = useJournalProgram();
+  console.log("JournalList accounts", accounts.data);
+  console.log("JournalList getProgramAccount", getProgramAccount.data);
 
-  console.log("JournalList accounts:", accounts.data);
-  console.log("JournalList getProgramAccount:", getProgramAccount.data);
   if (getProgramAccount.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>;
   }

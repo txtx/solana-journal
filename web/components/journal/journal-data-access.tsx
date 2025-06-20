@@ -31,7 +31,12 @@ export function useJournalProgram() {
 
   const getProgramAccount = useQuery({
     queryKey: ["get-program-account", { cluster }],
-    queryFn: () => connection.getParsedAccountInfo(programId),
+    queryFn: async () => {
+      console.log("Fetching program account for:", programId.toBase58());
+      const res = await connection.getParsedAccountInfo(programId);
+      console.log("Program account:", res);
+      return res;
+    },
   });
 
   const createEntry = useMutation<string, Error, CreateEntryArgs>({

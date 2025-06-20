@@ -2,6 +2,7 @@ anchor/target/*
 anchor/.anchor
 .nx/cache
 web/.next
+anchor/.anchor
 # javascript dependencies
 node_modules
 

@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.13.8",
     "@coral-xyz/anchor": "0.31.1",
     "@solana-developers/preset-next": "2.2.0",
     "@solana/spl-token": "0.4.1",
@@ -29,6 +30,7 @@
     "buffer": "6.0.3",
     "daisyui": "4.7.2",
     "encoding": "0.1.13",
+    "graphql": "^16.11.0",
     "jotai": "2.6.5",
     "next": "13.4.4",
     "react": "18.2.0",

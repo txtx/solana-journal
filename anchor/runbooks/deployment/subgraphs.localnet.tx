@@ -1,0 +1,27 @@
+
+action "journal_journal_entry_created" "svm::deploy_subgraph" {
+    program_id = action.deploy_journal.program_id
+    program_idl = action.deploy_journal.program_idl
+    block_height = 0 // action.deploy_journal.block_height
+    event {
+        name = "JournalEntryCreated"
+    }
+}
+
+action "journal_journal_entry_deleted" "svm::deploy_subgraph" {
+    program_id = action.deploy_journal.program_id
+    program_idl = action.deploy_journal.program_idl
+    block_height = 0 // action.deploy_journal.block_height
+    event {
+        name = "JournalEntryDeleted"
+    }
+}
+
+action "journal_journal_entry_updated" "svm::deploy_subgraph" {
+    program_id = action.deploy_journal.program_id
+    program_idl = action.deploy_journal.program_idl
+    block_height = 0 // action.deploy_journal.block_height
+    event {
+        name = "JournalEntryUpdated"
+    }
+}
