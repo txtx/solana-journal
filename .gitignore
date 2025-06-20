@@ -1,0 +1,16 @@
+anchor/target/*
+.nx/cache
+web/.next
+# javascript dependencies
+node_modules
+
+# environment variables
+.env*
+
+# macOS system files
+.DS_Store
+
+# next app
+.next/
+.swc/
+.*.env
