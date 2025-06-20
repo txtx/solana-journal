@@ -61,6 +61,11 @@ export function JournalList() {
 
   console.log("JournalList accounts:", accounts.data);
   console.log("JournalList getProgramAccount:", getProgramAccount.data);
+  console.log(
+    "JournalList accounts.data?.data:",
+    accounts.data?.data.journalEntryCreated
+  );
+
   if (getProgramAccount.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>;
   }
@@ -78,14 +83,16 @@ export function JournalList() {
     <div className={"space-y-6"}>
       {accounts.isLoading ? (
         <span className="loading loading-spinner loading-lg"></span>
-      ) : accounts.data?.length ? (
+      ) : accounts.data?.data.journalEntryCreated.length ? (
         <div className="grid gap-4 md:grid-cols-2">
-          {accounts.data?.map((account) => (
-            <JournalCard
-              key={account.publicKey.toString()}
-              account={account.publicKey}
-            />
-          ))}
+          {accounts.data?.data.journalEntryCreated.map(
+            (journalCreatedEntry) => (
+              <JournalCard
+                key={journalCreatedEntry.entry_id}
+                account={new PublicKey(journalCreatedEntry.entry_id)}
+              />
+            )
+          )}
         </div>
       ) : (
         <div className="text-center">
@@ -103,7 +110,23 @@ function JournalCard({ account }: { account: PublicKey }) {
   });
   const { publicKey } = useWallet();
   const [message, setMessage] = useState("");
-  const title = accountQuery.data?.title;
+  console.log("JournalCard accountQuery:", accountQuery.data);
+  const entryData = accountQuery.data;
+  if (!entryData) {
+    return <p>Loading...</p>;
+  }
+  const [journalEntryCreation, journalEntryUpdates] = entryData;
+  // get updates from most recent to oldest
+  let tmpMessageHistory = journalEntryUpdates
+    .sort((a, b) => b.blockHeight - a.blockHeight)
+    .map((update) => update.message);
+  console.log("tmpMessageHistory:", tmpMessageHistory);
+  const { title, message: initialEntryMessage } = journalEntryCreation;
+  tmpMessageHistory.push(initialEntryMessage);
+  const [currentMessage, messageHistory] = [
+    tmpMessageHistory[0],
+    tmpMessageHistory.slice(1).reverse(),
+  ];
 
   const isFormValid = message.trim() !== "";
 
@@ -127,9 +150,25 @@ function JournalCard({ account }: { account: PublicKey }) {
             className="card-title justify-center text-3xl cursor-pointer"
             onClick={() => accountQuery.refetch()}
           >
-            {accountQuery.data?.title}
+            {title}
           </h2>
-          <p>{accountQuery.data?.message}</p>
+          <p>Message: {currentMessage}</p>
+          {journalEntryUpdates.length > 0 ? (
+            <div>
+              Past Messages:{" "}
+              {messageHistory.map((message, index) => (
+                <p key={index}>
+                  {index === 0 ? (
+                    <>Initial message: {message}</>
+                  ) : (
+                    <>
+                      Update {index}: {message}
+                    </>
+                  )}
+                </p>
+              ))}
+            </div>
+          ) : undefined}
           <div className="card-actions justify-around">
             <textarea
               placeholder="Update message here"
@@ -162,7 +201,6 @@ function JournalCard({ account }: { account: PublicKey }) {
                 ) {
                   return;
                 }
-                const title = accountQuery.data?.title;
                 if (title) {
                   return deleteEntry.mutateAsync(title);
                 }
