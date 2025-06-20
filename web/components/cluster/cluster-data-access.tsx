@@ -20,13 +20,17 @@ export enum ClusterNetwork {
   Custom = "custom",
 }
 
+export const DEVNET_ENDPOINT =
+  process.env.NEXT_PUBLIC_DEVNET_ENDPOINT || clusterApiUrl("devnet");
+console.log("Using devnet endpoint:", DEVNET_ENDPOINT);
+
 // By default, we don't configure the mainnet-beta cluster
 // The endpoint provided by clusterApiUrl('mainnet-beta') does not allow access from the browser due to CORS restrictions
 // To use the mainnet-beta cluster, provide a custom endpoint
 export const defaultClusters: Cluster[] = [
   {
     name: "devnet",
-    endpoint: "https://sloth-thewy-geds.txtx.network:8899",
+    endpoint: DEVNET_ENDPOINT,
     network: ClusterNetwork.Devnet,
   },
   { name: "local", endpoint: "http://localhost:8899" },
